@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     options {
-        timeout(time: 2, unit: 'MINUTES') // Tiempo máximo para la ejecución del pipeline
+        timeout(time: 10, unit: 'MINUTES') // Tiempo máximo para la ejecución del pipeline
     }
 
     environment {
