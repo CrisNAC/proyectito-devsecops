@@ -33,7 +33,12 @@ pipeline {
 
         stage('Vulnerability Scan - Docker') {
             steps {
-                sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --severity=HIGH,CRITICAL ${IMAGE_NAME}:${IMAGE_TAG}"
+                sh """
+                docker run --rm \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                -v trivy-cache:/root/.cache/trivy \
+                aquasec/trivy image --severity=HIGH,CRITICAL ${IMAGE_NAME}:${IMAGE_TAG}
+                """
             }
         }
 
