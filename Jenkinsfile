@@ -30,7 +30,13 @@ pipeline {
             sh "docker run ${IMAGE_NAME}:${IMAGE_TAG} npm test"
           }
         }
-        
+
+        stage('Vulnerability Scan - Docker') {
+            steps {
+                sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --severity=HIGH,CRITICAL ${IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
+
         stage('Tag Docker Image') {
             steps {
                 echo "Tagging Docker image for Nexus repository..."
